@@ -4,6 +4,7 @@
 import { type LocationItem } from "~/app/common/locations";
 
 import { locationIcon } from "~/lib/icons/locationIcon";
+import { minusIcon } from "~/lib/icons/minusIcon";
 
 export function SvgIcon({
   html,
@@ -20,12 +21,10 @@ export function SvgIcon({
 
 export function PopupContent({
   data,
-  onDelete,
-  onEdit,
+  onMinimize,
 }: {
   data: LocationItem;
-  onDelete?: () => void;
-  onEdit?: () => void;
+  onMinimize?: () => void;
 }) {
   return (
     <div
@@ -37,6 +36,11 @@ export function PopupContent({
       }}
       data-id={`popup-${data.id}`}
     >
+      <div className="flex justify-end w-full">
+        <button onClick={onMinimize}>
+          <SvgIcon html={minusIcon} className="h-6 w-6 drop-shadow-md" />
+        </button>
+      </div>
       <iframe
         src={data.iframe}
         width="100%"

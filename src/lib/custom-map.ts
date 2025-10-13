@@ -3,8 +3,6 @@ import { createRoot, type Root } from "react-dom/client";
 import { createElement } from "react";
 import { type LocationItem } from "~/app/common/locations";
 import { useMapStore } from "~/app/_state/map.store";
-import { useNewLocationStore } from "~/app/_state/new-location.store";
-import { useUIStore } from "~/app/_state/ui.store";
 import { PopupContent } from "~/app/components/map/PopupContent";
 
 const markerRoots = new WeakMap<HTMLDivElement, Root>();
@@ -29,7 +27,7 @@ function createCustomMarker(
       src: `${droneIcon}`,
       id,
       className:
-        "w-auto h-10 cursor-pointer mt-8 z-[1000] rounded-md hover:scale-110",
+        "w-auto h-10 cursor-pointer z-[1000] rounded-md hover:scale-110",
       onClick: () => {
         const targetMap = mapInstance;
         if (!targetMap) return;
@@ -50,7 +48,11 @@ function createCustomMarker(
           if (currentLastPopup !== null && currentLastMarker !== null) {
             hidePopup(currentLastPopup, currentLastMarker, id);
           }
-          const { container, root } = createPopupContent(data);
+          const { container, root } = createPopupContent(
+            data,
+            popup,
+            markerElement
+          );
 
           popup.setDOMContent(container);
           popupRoots.set(popup, root);
@@ -109,40 +111,19 @@ function hidePopup(popup: mapboxgl.Popup, marker: HTMLDivElement, id: string) {
   useMapStore.getState().clearSelectedLocation();
 }
 
-function createPopupContent(data: LocationItem) {
+function createPopupContent(
+  data: LocationItem,
+  popup: mapboxgl.Popup,
+  markerElement: HTMLDivElement
+) {
   const container = document.createElement("div");
   const root = createRoot(container);
   root.render(
     createElement(PopupContent, {
       data,
-      onDelete: () => deletePlace(data),
-      onEdit: () => editPlace(data),
+      onMinimize: () => hidePopup(popup, markerElement, data.id),
     })
   );
   elementRoots.set(container, root);
   return { container, root };
-}
-
-function editPlace(data: LocationItem) {
-  // useNewLocationStore.getState().setEditLocation(data);
-  useUIStore.getState().setNewLocationModalOpen(true);
-}
-
-function deletePlace(data: LocationItem) {
-  const marker = document.querySelector(`[data-id="${data.id}"]`);
-  if (marker && marker instanceof HTMLDivElement) {
-    const markerRoot = markerRoots.get(marker);
-    if (markerRoot && typeof markerRoot.unmount === "function")
-      markerRoot.unmount();
-    marker.remove();
-  }
-  const popupContent = document.querySelector(`[data-song="popup-${data.id}"]`);
-  if (popupContent) {
-    const container = popupContent.parentElement as HTMLDivElement;
-    const root = elementRoots.get(container);
-    if (root && typeof root.unmount === "function") root.unmount();
-    const popupEl = popupContent.parentElement
-      ?.parentElement as HTMLDivElement | null;
-    if (popupEl) popupEl.remove();
-  }
 }
