@@ -22,12 +22,14 @@ function createCustomMarker(
   markerRoots.set(markerElement, markerRoot);
 
   const id = `${data.id}`;
+
+  const droneIcon = "/drone-icon.svg";
   markerRoot.render(
     createElement("img", {
-      src: data.image,
+      src: `${droneIcon}`,
       id,
       className:
-        "w-auto h-14 cursor-pointer mt-8 z-[1000] rounded-md hover:scale-110",
+        "w-auto h-10 cursor-pointer mt-8 z-[1000] rounded-md hover:scale-110",
       onClick: () => {
         const targetMap = mapInstance;
         if (!targetMap) return;

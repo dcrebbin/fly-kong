@@ -27,30 +27,24 @@ export function PopupContent({
   onDelete?: () => void;
   onEdit?: () => void;
 }) {
-  const actionButtons = (
-    <div className="flex items-center justify-center gap-2">
-      <a
-        href={`https://www.google.com/maps/dir//${data.lat},${data.lng}/`}
-        target="_blank"
-        rel="noreferrer"
-      >
-        <SvgIcon html={locationIcon} className="h-6 w-6" />
-      </a>
-    </div>
-  );
-
   return (
     <div
-      className="relative top-0 flex h-fit w-[150px] flex-col items-center justify-start rounded-md bg-white p-2"
+      className="relative top-0 flex h-[300px] w-[500px] flex-col items-center justify-start rounded-md bg-white"
       tabIndex={-1}
       style={{
-        maxHeight: "150px",
-        height: "100%",
-        width: "150px",
+        maxHeight: "500px",
+        width: "500px",
       }}
       data-id={`popup-${data.id}`}
     >
-      {actionButtons}
+      <iframe
+        src={data.iframe}
+        width="100%"
+        height="100%"
+        className="p-0 m-0"
+        style={{ border: 0 }}
+        allowFullScreen
+      />
     </div>
   );
 }
