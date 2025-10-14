@@ -6,6 +6,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Soeng Kong | 上港",
   description: "Soeng Kong - Experience Hong Kong from Above!",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

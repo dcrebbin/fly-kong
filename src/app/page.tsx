@@ -5,6 +5,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useMapStore } from "./_state/map.store";
 import { LOCATIONS } from "./common/locations";
 import { addPlace } from "~/lib/custom-map";
+import Appbar from "./components/appbar";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiZGNyZWJiaW4iLCJhIjoiY20xMjFtYnc0MHh4ZjJrb2h2NDR5MjF6YyJ9.LOAauCyTV_pfMAYd08pTmg";
@@ -34,6 +35,7 @@ export default function Home() {
   };
   return (
     <div className="flex h-screen w-screen flex-col overflow-hidden">
+      <Appbar />
       <div ref={handleMapContainerRef} className="map-container relative" />
       <style jsx>{`
         .map-container {
