@@ -246,6 +246,11 @@ const RAW_LOCATIONS: RawLocationSchema[] = [
     iframe:
       "https://www.google.com/maps/embed?pb=!4v1760420936985!6m8!1m7!1sCAoSFkNJSE0wb2dLRUlDQWdJRHF2ZnlkV3c.!2m2!1d22.30525909113848!2d114.0180826927005!3f340!4f10!5f0.7820865974627469",
   },
+  {
+    coordinates: [22.3399681,114.0623066],
+    iframe:
+      "https://www.google.com/maps/embed?pb=!4v1761903333499!6m8!1m7!1sCAoSF0NJSE0wb2dLRUlDQWdJQ0J5dldBaFFF!2m2!1d22.33996812867349!2d114.0623065785032!3f157.67937655211261!4f-89!5f0.7820865974627469",
+  },
 ];
 
 export const LOCATIONS: LocationItem[] = z
